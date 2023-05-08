@@ -1,0 +1,36 @@
+.bg-image {
+  background: url("../public/neuclide-bg.png");
+  background-size: cover;
+}
+
+.nav-item {
+  @apply font-bold text-xl px-4;
+}
+
+.box-component-bg {
+  border: 20px solid transparent;
+  border-color: rgba(23, 74, 98, 0.43);
+  box-shadow: 20px 10px 100px rgba(0, 0, 0, 0.25);
+}
+
+.box-component-img {
+  @apply object-contain mx-1 my-1;
+}
+
+.box-component-img:hover {
+  transform: scale(1.03);
+  transition: all 200ms;
+}
+
+.form-bg {
+  background-color: rgba(23, 74, 98, 0.3);
+  box-shadow: -1px -1px 4px rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(24px);
+}
+
+.userview-box-bg {
+  background: rgba(23, 74, 98, 0.2);
+  box-shadow: -1px -1px 4px rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(24px);
+}
+
