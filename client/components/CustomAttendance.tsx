@@ -3,11 +3,11 @@ import CustomCircularProgress from './CustomCircularProgress';
 
 export default function CustomAttendance(props: any) {
   const { name, present, absent } = props.subprops;
+  const { onAttendanceUpdate } = props;
   const percentage = (present * 100) / (present + absent);
 
   async function handlePresent(e: any) {
     e.preventDefault();
-    console.log("present");
     let sessionToken = localStorage.getItem("token");
     let resp = await fetch("http://localhost:8080/subject/updateattended", {
       method: 'POST',
@@ -19,8 +19,9 @@ export default function CustomAttendance(props: any) {
         subname: name
       })
     });
-    let data = resp.json();
-    console.log(data);
+
+    onAttendanceUpdate();
+
   }
 
   async function handleAbsent(e: any) {
@@ -36,7 +37,9 @@ export default function CustomAttendance(props: any) {
         subname: name
       })
     });
-    console.log(resp.json());
+
+    onAttendanceUpdate();
+
   }
 
   return (

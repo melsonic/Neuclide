@@ -14,7 +14,10 @@ import {
 } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
 
-export default function AddSubjectModal() {
+export default function AddSubjectModal(props: any) {
+
+  const {onSubjectAdded} = props;
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [subname, setSubname] = useState("");
   const initialRef = useRef(null);
@@ -30,7 +33,10 @@ export default function AddSubjectModal() {
       body: JSON.stringify({
         subname
       })
-    })
+    });
+
+    onSubjectAdded();
+
     onClose();
   }
 
@@ -44,7 +50,7 @@ export default function AddSubjectModal() {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent textColor={'blackAlpha.800'} >
+        <ModalContent textColor={'blackAlpha.800'} bg={'#174a62'} >
           <ModalHeader>Add Subject</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
