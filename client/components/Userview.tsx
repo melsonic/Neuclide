@@ -73,20 +73,21 @@ export default function Userview() {
   }, [getSubjects]);
 
   return (
-    <div className="bg-image flex flex-col flex-start items-center rounded-sm py-16">
-      <h1 className="text-5xl font-bold">{headerString}</h1>
+    <div className="bg-image flex flex-col flex-start items-center rounded-sm overflow-x-hidden py-16">
+      <h1 className="text-3xl sm:text-5xl font-bold">{headerString}</h1>
       {/* top box : global stats*/}
-      <div className="flex flex-row justify-evenly items-center userview-box-bg p-8 mt-16 lg:w-2/3">
+      <div className="flex flex-row justify-evenly items-center userview-box-bg p-4 sm:p-8 mt-16 lg:w-2/3">
         <UserStatBox item="01" name="Target" percentage="75" />
         <UserStatBox item="02" name="Overall" percentage={percentage} />
-        <div className="flex flex-col h-full items-center justify-between py-4">
-          <Image
+        <div className="flex flex-col h-full items-center justify-between">
+          <div className="h-20 w-20 md:h-36 md:w-36 relative" >
+            <Image
             src={Avatar}
             alt="profile picture"
-            height={150}
-            width={150}
-            className="w-36 h-36 object-cover rounded-full border-4 border-solid border-cyan-400 mb-1"
+            fill
+            className="object-cover rounded-full border-4 border-solid border-cyan-400 mb-1"
           />
+          </div>
 
           <AddSubjectModal onSubjectAdded={getSubjects} />
           

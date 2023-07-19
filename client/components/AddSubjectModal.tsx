@@ -42,7 +42,7 @@ export default function AddSubjectModal(props: any) {
 
   return (
     <>
-      <Button colorScheme='linkedin' marginTop={2} onClick={onOpen}>ADD SUBJECT</Button>
+      <Button colorScheme='linkedin' marginTop={2} onClick={onOpen} fontSize={{base: '10', md: '20'}} >ADD SUBJECT</Button>
 
       <Modal
         initialFocusRef={initialRef}
