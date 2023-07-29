@@ -1,4 +1,6 @@
 import bcrypt from "bcryptjs";
+import constants from "../constants.js";
+
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 
@@ -7,8 +9,7 @@ async function hashPassword(password) {
     const hashedPassword = await bcrypt.hash(password, salt);
     return hashedPassword;
   } catch (err) {
-    console.log(err);
-    return "herror";
+    return constants.ERROR_MESSAGE.HASH_ERROR;
   }
 }
 

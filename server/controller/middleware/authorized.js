@@ -2,14 +2,16 @@ import { User } from "../../model/User.js";
 import { BlackListedToken } from "../../model/blacklistToken.js";
 import { extractJwtToken, extractPayload } from "../jwt/main.js";
 import { comparePassword } from "../../hash/password.js";
+import constants from "../../constants.js";
 
 // check if a token is valid or not
 async function authMiddleware(req, res, next) {
   // extract the json web token
   const jwt_token = extractJwtToken(req.headers.authorization);
-  if (jwt_token == "jwtError") {
+
+  if (jwt_token === constants.ERROR_MESSAGE.JWT_ERROR) {
     res.status(401).json({
-      "message": "error extracting jwt",
+      "message": constants.ERROR_MESSAGE.JWT_EXTRACT_ERROR,
     });
     return;
   }
@@ -19,14 +21,14 @@ async function authMiddleware(req, res, next) {
     let bltoken = await BlackListedToken.findOne({ token: jwt_token });
     if (bltoken != null) {
       res.status(401).json({
-        "message": "token is blacklisted, please log in",
+        "message": constants.ERROR_MESSAGE.JWT_TOKEN_BLACKLIST_ERROR,
       });
       return;
     }
   } catch (err) {
     console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "error searching token in db",
+      "message": constants.ERROR_MESSAGE.JWT_TOKEN_SEARCH_DB_ERROR,
     });
     return;
   }
@@ -36,7 +38,7 @@ async function authMiddleware(req, res, next) {
 
   if (user == "jwtError") {
     res.status(401).json({
-      "message": "token is invalid | error extracting payload",
+      "message": constants.ERROR_MESSAGE.JWT_INVALID_TOKEN_ERROR,
     });
     return;
   }
@@ -48,7 +50,7 @@ async function authMiddleware(req, res, next) {
   } catch (err) {
     console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "error finding user, user not logged in",
+      "message": constants.ERROR_MESSAGE.USER_NOT_REGISTERED_ERROR,
     });
     return;
   }
@@ -57,7 +59,7 @@ async function authMiddleware(req, res, next) {
 
   if (!isSame) {
     res.status(401).json({
-      "message": "password didn't match",
+      "message": constants.ERROR_MESSAGE.PASSWORD_MATCH_ERROR,
     });
     return;
   }

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import constants from "../constants.js";
 
 const SubjectSchema = mongoose.Schema({
   name: {
@@ -15,6 +16,6 @@ const SubjectSchema = mongoose.Schema({
   },
 });
 
-const Subject = mongoose.model("Subject", SubjectSchema);
+const Subject = mongoose.model(constants.MODEL.SUBJECT, SubjectSchema);
 
 export { Subject, SubjectSchema };

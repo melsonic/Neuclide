@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import constants from "../constants.js";
 
 const BlackListedTokenSchema = mongoose.Schema({
   token: {
@@ -12,7 +13,7 @@ const BlackListedTokenSchema = mongoose.Schema({
 });
 
 const BlackListedToken = mongoose.model(
-  "BlackListedToken",
+  constants.MODEL.BLACK_LISTED_TOKEN,
   BlackListedTokenSchema,
 );
 

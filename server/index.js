@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import { router } from "./router/index.js";
 import cors from "cors";
+import constants from "./constants.js";
 
 dotenv.config();
 const app = express();
@@ -16,13 +17,13 @@ mongoose.connect(`${process.env.DB_URL}${process.env.DB_NAME}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
-  console.log("db connected");
+  console.log(constants.RESPONSE_MESSAGE.DB_CONNECT_SUCCESS);
 }).catch((e) => {
-  console.log(`no connection with error ${e} `);
+  console.log(constants.ERROR_MESSAGE.DB_CONNECT_ERROR + e);
 });
 
 app.use("/", router);
 
 app.listen(PORT, () => {
-  console.log(`app is listening at port ${PORT}`);
+  console.log(constants.RESPONSE_MESSAGE.SERVER_LISTENING_SUCCESS + PORT);
 });

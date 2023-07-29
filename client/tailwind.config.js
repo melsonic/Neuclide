@@ -14,6 +14,10 @@ module.exports = {
       },
       colors: {
         "primary-dark": "#081920",
+        "neuclide-green": "#3CDF86",
+        "neuclide-red": "#DF3C3C",
+        "neuclide-present": "#00FF00",
+        "neuclide-absent": "#FF0000",
       },
       height: {
         "25": "6.25rem",

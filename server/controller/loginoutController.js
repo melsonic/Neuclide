@@ -2,6 +2,7 @@ import { User } from "../model/User.js";
 import { comparePassword } from "../hash/password.js";
 import { createJwtToken } from "./jwt/main.js";
 import { BlackListedToken } from "../model/blacklistToken.js";
+import constants from "../constants.js";
 
 // login controller function
 async function loginController(req, res) {
@@ -16,14 +17,14 @@ async function loginController(req, res) {
   } catch (err) {
     console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "error finding user",
+      "message": constants.ERROR_MESSAGE.USER_FINDING_ERROR,
     });
     return;
   }
 
   if (dbuser == null) {
     res.status(401).json({
-      "message": "username doesn't exist",
+      "message": constants.ERROR_MESSAGE.USERNAME_NOT_EXIST_ERROR,
     });
     return;
   }
@@ -32,7 +33,7 @@ async function loginController(req, res) {
 
   if (!isSame) {
     res.status(401).json({
-      "message": "password didn't match",
+      "message": constants.ERROR_MESSAGE.PASSWORD_MATCH_ERROR,
     });
     return;
   }
@@ -41,7 +42,7 @@ async function loginController(req, res) {
 
   res.status(200).json({
     "token": jwt_token,
-    "message": "user logged in successfully",
+    "message": constants.RESPONSE_MESSAGE.USER_LOGIN_SUCCESS,
   });
 }
 
@@ -57,20 +58,20 @@ async function logoutController(req, res) {
     });
     if(blacklistedtoken == null){
       res.status(500).json({
-        "message": "error blacklisting a access token"
+        "message": constants.ERROR_MESSAGE.ACCESS_TOKEN_BLACKLISTING_ERROR
       });
       reutrn;
     }
   } catch (err) {
     console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "error blacklisting a jwt token",
+      "message": constants.ERROR_MESSAGE.ACCESS_TOKEN_BLACKLISTING_ERROR
     });
     return;
   }
 
   res.status(200).json({
-    "message": "user logged out successfully",
+    "message": constants.RESPONSE_MESSAGE.USER_LOGOUT_SUCCESS,
   });
 }
 

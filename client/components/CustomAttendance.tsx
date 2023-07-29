@@ -46,8 +46,8 @@ export default function CustomAttendance(props: any) {
     <div className='flex flex-col justify-between items-center'>
       <CustomCircularProgress percentage={percentage} />
       <div className='flex justify-evenly w-full text-2xl mt-4'>
-        <Button className='mr-1' type='submit' colorScheme='whatsapp' variant='solid' onClick={handlePresent} >+</Button>
-        <Button className='ml-1' type='submit' colorScheme='red' variant='solid' onClick={handleAbsent} >-</Button>
+        <Button className='mr-1' type='submit' background='neuclide_green' color='black' variant='solid' onClick={handlePresent} >+</Button>
+        <Button className='ml-1' type='submit' background='neuclide_red' color='black' variant='solid' onClick={handleAbsent} >-</Button>
       </div>
     </div>
   )

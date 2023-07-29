@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { SubjectSchema } from "./Subject.js";
+import constants from "../constants.js";
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -13,6 +14,6 @@ const UserSchema = mongoose.Schema({
   subjects: [SubjectSchema],
 });
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model(constants.MODEL.USER, UserSchema);
 
 export { User };

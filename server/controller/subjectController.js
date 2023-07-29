@@ -1,5 +1,6 @@
 import { Subject } from "../model/Subject.js";
 import { User } from "../model/User.js";
+import constants from "../constants.js";
 
 async function viewSubjects(req, res) {
   const user = res.locals.user;
@@ -9,9 +10,8 @@ async function viewSubjects(req, res) {
     dbuser = await User.findOne({ username: user.username });
     subjects = await dbuser.subjects;
   } catch (err) {
-    console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "eror finding user | pushing subject | saving user",
+      "message": constants.ERROR_MESSAGE.USER_FINDING_ERROR,
     });
     return;
   }
@@ -35,20 +35,36 @@ async function addSubject(req, res) {
   });
 
   let dbuser = null;
+
   try {
     dbuser = await User.findOne({ username: user.username });
+  } catch (err) {
+    res.status(500).json({
+      "message": constants.ERROR_MESSAGE.USER_FINDING_ERROR,
+    });
+    return;
+  }
+
+  try {
     await dbuser.subjects.push(subject_toadd);
+  } catch (err) {
+    res.status(500).json({
+      "message": constants.ERROR_MESSAGE.ADD_SUBJECT_ERROR,
+    });
+    return;
+  }
+
+  try {
     await dbuser.save();
   } catch (err) {
-    console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "eror finding user | pushing subject | saving user",
+      "message": constants.ERROR_MESSAGE.SAVE_USER_ERROR,
     });
     return;
   }
 
   res.status(200).json({
-    "message": "subject added successfully",
+    "message": constants.RESPONSE_MESSAGE.ADD_SUBJECT_SUCCESS,
   });
 }
 
@@ -60,20 +76,36 @@ async function deleteSubject(req, res) {
   const user = res.locals.user;
 
   let dbuser = null;
+
   try {
     dbuser = await User.findOne({ username: user.username });
+  } catch (err) {
+    res.status(500).json({
+      "message": constants.ERROR_MESSAGE.USER_FINDING_ERROR,
+    });
+    return;
+  }
+
+  try {
     await dbuser.subjects.pull({ name: subject_name });
+  } catch (err) {
+    res.status(500).json({
+      "message": constants.ERROR_MESSAGE.DELETE_SUBJECT_ERROR,
+    });
+    return;
+  }
+
+  try {
     await dbuser.save();
   } catch (err) {
-    console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "eror finding user | deleting subject | saving user",
+      "message": constants.ERROR_MESSAGE.SAVE_USER_ERROR,
     });
     return;
   }
 
   res.status(200).json({
-    "message": "subject removed successfully",
+    "message": constants.RESPONSE_MESSAGE.DELETE_SUBJECT_SUCCESS,
   });
 }
 
@@ -100,15 +132,14 @@ async function updateSubjectName(req, res) {
 
     await dbuser.save();
   } catch (err) {
-    console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "error updating sub name",
+      "message": constants.ERROR_MESSAGE.UPDATE_SUBJECT_NAME_ERROR,
     });
     return;
   }
 
   res.status(200).json({
-    "message": "subject name updated successfully",
+    "message": constants.RESPONSE_MESSAGE.UPDATE_SUBJECT_NAME_SUCCESS,
   });
 }
 
@@ -133,15 +164,14 @@ async function updateAttendedClasses(req, res) {
 
     await dbuser.save();
   } catch (err) {
-    console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "error updating sub present classes count",
+      "message": constants.ERROR_MESSAGE.MARK_PRESENT_ERRORR,
     });
     return;
   }
 
   res.status(200).json({
-    "message": "attendance added successfully",
+    "message": constants.RESPONSE_MESSAGE.MARK_PRESENT_SUCCESS,
   });
 }
 
@@ -166,15 +196,14 @@ async function updateMissedClasses(req, res) {
 
     await dbuser.save();
   } catch (err) {
-    console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "error updating sub absent classes count",
+      "message": constants.ERROR_MESSAGE.MARK_ABSENT_ERROR,
     });
     return;
   }
 
   res.status(200).json({
-    "message": "missed class added successfully",
+    "message": constants.RESPONSE_MESSAGE.MARK_ABSENT_SUCCESS,
   });
 }
 

@@ -23,6 +23,8 @@ export default function AddSubjectModal(props: any) {
   const initialRef = useRef(null);
 
   async function handleClick() {
+    if(subname === "") return;
+
     const token = localStorage.getItem('token');
     const response = await fetch("http://localhost:8080/subject/add", {
       method: 'POST',
@@ -47,10 +49,10 @@ export default function AddSubjectModal(props: any) {
       <Modal
         initialFocusRef={initialRef}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={onClose} 
       >
         <ModalOverlay />
-        <ModalContent textColor={'blackAlpha.800'} bg={'#174a62'} >
+        <ModalContent textColor={'whiteAlpha.800'} bg={'#174a62'} >
           <ModalHeader>Add Subject</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
@@ -61,10 +63,10 @@ export default function AddSubjectModal(props: any) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleClick} >
+            <Button colorScheme='twitter' color='black' mr={3} onClick={handleClick} >
               Save
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button colorScheme='gray' color='black' onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

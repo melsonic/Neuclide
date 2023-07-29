@@ -18,7 +18,7 @@ export default function CustomCircularProgress(props: any) {
         h={{ base: '80px', md: '120px',  }}
         w={{ base: '80px', md: '120px',  }}
         >
-        <CircularProgress value={percentage} size="100%" color={percentage >= 75 ? 'green.300' : 'red.300'} >
+        <CircularProgress value={percentage} size="100%" color={percentage >= 75 ? 'neuclide_green' : 'neuclide_red'} >
         <CircularProgressLabel fontSize={{base: '20px', md: '30px'}} >{percentage}</CircularProgressLabel>
       </CircularProgress>
       </Box>

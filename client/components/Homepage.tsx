@@ -1,23 +1,13 @@
 import React from "react";
 import BoxComponent from "./BoxComponent";
-import Link from "next/link";
+// import Link from "next/link";
+import Navbar from "./Navbar";
 
 export default function Homepage() {
   return (
-    <div className="h-screen bg-image">
+    <div className="min-h-screen bg-image">
       {/* navigation bar */}
-      <nav className="absolute w-full flex justify-between px-20 pt-10">
-        {/* logo */}
-        <div>
-          <Link href="#" className="text-gradient nav-item">NEUCLIDE</Link>
-        </div>
-        {/* nav items */}
-        <div>
-          <Link href="/login" className="nav-item">Login</Link>
-          <Link href="#" className="nav-item">Register</Link>
-          <Link href="#" className="nav-item">About</Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* main items */}
       <div className="h-screen flex flex-col justify-center items-center">

@@ -1,7 +1,8 @@
 ## <span style="color:cyan; font-weight:bold">Attendance Manager</span>
 ---
 ### <span style="color:lime">Technologies Used</span>
-- Next
+- Nextjs
+- Tailwind CSS
 - Chakra UI
 - Express
 - Mongodb
@@ -11,7 +12,7 @@
 - User Registration
 - User Login/Logout
 - View Attendance Dashboard
-- Add Subject
+- Add/Delete Subject
 - Mark Present/Absent
 ---
 ### <span style="color:lime">Setup Locally</span>
@@ -45,3 +46,5 @@
 ![SS3](./imgs/ss3.png)
 
 ![SS4](./imgs/ss4.png)
+
+![SS5](./imgs/ss5.png)

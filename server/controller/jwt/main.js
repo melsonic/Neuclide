@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+import constants from "../../constants.js";
+
 dotenv.config();
 
 const privateKey = process.env.JWT_PRIVATE_KEY;
@@ -13,7 +15,7 @@ function createJwtToken(user) {
     },
     privateKey,
     {
-      expiresIn: "1h",
+      expiresIn: constants.JWT_TOKEN_EXPIRE.ONE_HOUR,
     },
   );
   return token;
@@ -21,9 +23,9 @@ function createJwtToken(user) {
 
 // function to extract the jwt token from the authorization header
 function extractJwtToken(authHeader) {
-  if (!authHeader) return "jwtError";
+  if (!authHeader) return constants.ERROR_MESSAGE.JWT_ERROR;
   const token = authHeader.split(" ")[1];
-  if (!token) return "jwtError";
+  if (!token) return constants.ERROR_MESSAGE.JWT_ERROR;
   return token;
 }
 
@@ -33,10 +35,9 @@ function extractPayload(token) {
   try {
     user = jwt.verify(token, privateKey);
     const isExpire = Date.now() > (user.exp * 1000);
-    if (isExpire) return "jwtError";
+    if (isExpire) return constants.ERROR_MESSAGE.JWT_ERROR;
   } catch (err) {
-    console.log(`err : ${err}`);
-    return "jwtError";
+    return constants.ERROR_MESSAGE.JWT_ERROR;
   }
   return user;
 }

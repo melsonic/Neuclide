@@ -1,9 +1,9 @@
-import Login from "@/components/Login";
+import Userview from "@/components/Userview";
 
 export default function Home() {
   return (
     <main>
-      <Login />
+      <Userview />
     </main>
   )
 }

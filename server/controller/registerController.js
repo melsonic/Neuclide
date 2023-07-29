@@ -1,5 +1,7 @@
 import {User} from "../model/User.js";
 import { hashPassword } from "../hash/password.js";
+import { createJwtToken } from "./jwt/main.js";
+import constants from "../constants.js";
 
 async function registerController(req, res) {
   let user = req.body;
@@ -10,9 +12,8 @@ async function registerController(req, res) {
   try {
     pword = await hashPassword(pword);
   } catch (err) {
-    console.log(`hashing error : ${err}`);
     res.status(500).json({
-      "message": "error hashing the password"
+      "message": constants.ERROR_MESSAGE.PASSWORD_HASH_ERROR
     });
     return;
   }
@@ -23,9 +24,8 @@ async function registerController(req, res) {
   try {
     dbuser = await User.findOne({username: uname});
   } catch (err) {
-    console.log(`db error : ${err}`);
     res.status(500).json({
-      "message": "error finding user"
+      "message": constants.ERROR_MESSAGE.USER_FINDING_ERROR
     });
     return;
   }
@@ -39,23 +39,24 @@ async function registerController(req, res) {
     try {
       dbuser = await User.create(tuser);
     } catch (err) {
-      console.log(`db error : ${err}`);
       res.status(500).json({
-        "message": "error creating new user"
+        "message": constants.ERROR_MESSAGE.CREATE_NEW_USER_ERROR
       });
       return;
     }
     
   }else{
     res.status(401).json({
-      "message": "username already exists"
+      "message": constants.RESPONSE_MESSAGE.USERNAME_ALREADY_EXIST
     });
     return;
   }
+  
+  const jwt_token = createJwtToken(user);
 
   res.status(200).json({
-    "user": dbuser,
-    "message": "user registered successfully"
+    "token": jwt_token,
+    "message": constants.RESPONSE_MESSAGE.USER_REGISTER_SUCCESS
   });
 
 }

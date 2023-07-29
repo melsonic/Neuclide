@@ -1,6 +1,6 @@
 .bg-image {
-  background: url("../public/neuclide-bg.png");
-  background-size: cover;
+  background-color: #081920;
+  min-height: 100vh;
 }
 
 .nav-item {
