@@ -4,7 +4,12 @@ import { createJwtToken } from "./jwt/main.js";
 import { BlackListedToken } from "../model/blacklistToken.js";
 import constants from "../constants.js";
 
-// login controller function
+/**
+ * @description Handles user login and authentication.
+ * @param {Object} req - HTTP request object containing user login data in the request body.
+ * @param {Object} res - HTTP response object to send the result of the login process.
+ * @returns {void}
+ */
 async function loginController(req, res) {
   let user = req.body;
   let uname = req.body.username;
@@ -46,7 +51,12 @@ async function loginController(req, res) {
   });
 }
 
-// function to logout a user
+/**
+ * @description Handles user logout and token blacklisting.
+ * @param {*} req - HTTP request object.
+ * @param {*} res - HTTP response object.
+ * @returns {void}
+ */
 async function logoutController(req, res) {
 
   const jwt_token = res.locals.jwt_token;
@@ -56,7 +66,7 @@ async function logoutController(req, res) {
     blacklistedtoken = await BlackListedToken.create({
       token: jwt_token,
     });
-    if(blacklistedtoken == null){
+    if (blacklistedtoken == null) {
       res.status(500).json({
         "message": constants.ERROR_MESSAGE.ACCESS_TOKEN_BLACKLISTING_ERROR
       });

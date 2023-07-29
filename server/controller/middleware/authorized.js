@@ -4,7 +4,14 @@ import { extractJwtToken, extractPayload } from "../jwt/main.js";
 import { comparePassword } from "../../hash/password.js";
 import constants from "../../constants.js";
 
-// check if a token is valid or not
+
+/**
+ * @description Authentication Middleware
+ * @param {*} req - HTTP request object
+ * @param {*} res - HTTP response object
+ * @param {Function} next - Callback function to pass control to the next middleware
+ * @returns {void}
+ */
 async function authMiddleware(req, res, next) {
   // extract the json web token
   const jwt_token = extractJwtToken(req.headers.authorization);

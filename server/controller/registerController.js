@@ -3,6 +3,12 @@ import { hashPassword } from "../hash/password.js";
 import { createJwtToken } from "./jwt/main.js";
 import constants from "../constants.js";
 
+/**
+ * @description Handles user registration process.
+ * @param {*} req - HTTP request object containing user registration data in the request body.
+ * @param {*} res - HTTP response object to send the result of the registration process.
+ * @returns {void}
+ */
 async function registerController(req, res) {
   let user = req.body;
   let uname = user.username;

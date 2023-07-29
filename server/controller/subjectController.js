@@ -1,7 +1,13 @@
-import { Subject } from "../model/Subject.js";
+import { Subject, SubjectSchema } from "../model/Subject.js";
 import { User } from "../model/User.js";
 import constants from "../constants.js";
 
+/**
+ * @description View subjects associated with the authenticated user.
+ * @param {*} req - HTTP request object
+ * @param {*} res - HTTP response object
+ * @returns {void}
+ */
 async function viewSubjects(req, res) {
   const user = res.locals.user;
   let dbuser = null;
@@ -21,9 +27,12 @@ async function viewSubjects(req, res) {
   })
 }
 
-// add subject
-// takes the subject name `subname` from the req.body
-// @param subname
+/**
+ * @description Add a new subject to the subject list.
+ * @param {*} req - HTTP request object containing the subject name (req.body.subname).
+ * @param {*} res - HTTP response object to send the result of the subject addition process.
+ * @returns {void}
+ */
 async function addSubject(req, res) {
   const subject_name = req.body.subname;
   const user = res.locals.user;
@@ -68,9 +77,12 @@ async function addSubject(req, res) {
   });
 }
 
-// delete subject
-// takes the subject name `subname` from the req.body
-// @param subname
+/**
+ * @description Delete a subject from the subject list.
+ * @param {*} req - HTTP request object containing the subject name to be deleted (req.body.subname).
+ * @param {*} res - HTTP response object to send the result of the subject deletion process.
+ * @returns {void}
+ */
 async function deleteSubject(req, res) {
   const subject_name = req.body.subname;
   const user = res.locals.user;
@@ -109,9 +121,12 @@ async function deleteSubject(req, res) {
   });
 }
 
-// update subject name
-// @param original_subname
-// @param updated_subname
+/**
+ * @description Update the name of a subject for the authenticated user.
+ * @param {*} req - HTTP request object containing the current subject name and the updated subject name.
+ * @param {*} res - HTTP response object to send the result of the subject name update process.
+ * @returns {void}
+ */
 async function updateSubjectName(req, res) {
   const subname = req.body.subname;
   const updated_subname = req.body.updated_subname;
@@ -143,8 +158,12 @@ async function updateSubjectName(req, res) {
   });
 }
 
-// update attended i.e increase it by 1
-// @param : `subname` for targeted subject name
+/**
+ * @description Update the number of present classes for a subject.
+ * @param {*} req - HTTP request object containing the subject name to mark present (req.body.subname).
+ * @param {*} res - HTTP response object to send the result of the marking present process.
+ * @returns {void}
+ */
 async function updateAttendedClasses(req, res) {
   const subname = req.body.subname;
   const user = res.locals.user;
@@ -175,8 +194,12 @@ async function updateAttendedClasses(req, res) {
   });
 }
 
-// update missed i.e increase it by 1
-// @param : `subname` for targeted subject name
+/**
+ * @description Update the number of missed classes for a subject.
+ * @param {*} req - HTTP request object containing the subject name to mark absent (req.body.subname).
+ * @param {*} res - HTTP response object to send the result of the marking absent process.
+ * @returns {void}
+ */
 async function updateMissedClasses(req, res) {
   const subname = req.body.subname;
   const user = res.locals.user;

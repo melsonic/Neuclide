@@ -6,7 +6,11 @@ dotenv.config();
 
 const privateKey = process.env.JWT_PRIVATE_KEY;
 
-// function to create jwt token for a user
+/**
+ * @description Create a JSON Web Token (JWT) for the provided user data.
+ * @param {*} user - User object containing the necessary data to generate the token (e.g., username, password).
+ * @returns {string} The generated JSON Web Token.
+ */
 function createJwtToken(user) {
   const token = jwt.sign(
     {
@@ -21,7 +25,11 @@ function createJwtToken(user) {
   return token;
 }
 
-// function to extract the jwt token from the authorization header
+/**
+ * @description Extracts the JSON Web Token (JWT) from the Authorization header.
+ * @param {string} authHeader - The Authorization header containing the JWT.
+ * @returns {string} The extracted JSON Web Token or an error message if extraction fails.
+ */
 function extractJwtToken(authHeader) {
   if (!authHeader) return constants.ERROR_MESSAGE.JWT_ERROR;
   const token = authHeader.split(" ")[1];
@@ -29,7 +37,11 @@ function extractJwtToken(authHeader) {
   return token;
 }
 
-// function to extract payload from a token
+/**
+ * @description extracts payload from a jwt token
+ * @param {string} token - The JSON Web Token to extract and verify the payload from.
+ * @returns {Object | string} The payload object containing user data or an error message if verification fails.
+ */
 function extractPayload(token) {
   let user = null;
   try {
