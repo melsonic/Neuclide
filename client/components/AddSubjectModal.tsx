@@ -12,18 +12,27 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react'
-import React, { useRef, useState } from 'react'
+import React, { ReactElement, useRef, useState } from 'react'
 
-export default function AddSubjectModal(props: any) {
+interface AddSubjectModalProps {
+  onSubjectAdded: Function
+}
 
-  const {onSubjectAdded} = props;
+export default function AddSubjectModal(props: AddSubjectModalProps): ReactElement {
 
+  const { onSubjectAdded } = props;
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [subname, setSubname] = useState("");
   const initialRef = useRef(null);
 
-  async function handleClick() {
-    if(subname === "") return;
+  /**
+   * Asynchronous function to handle the click event for adding a new subject.
+   * @async
+   * @function handleClick
+   * @returns {Promise<void>}
+   */
+  async function handleClick(): Promise<void> {
+    if (subname === "") return;
 
     const token = localStorage.getItem('token');
     const response = await fetch("http://localhost:8080/subject/add", {
@@ -36,20 +45,19 @@ export default function AddSubjectModal(props: any) {
         subname
       })
     });
-
     onSubjectAdded();
-
     onClose();
   }
 
+
   return (
     <>
-      <Button colorScheme='linkedin' marginTop={2} onClick={onOpen} fontSize={{base: '10', md: '20'}} >ADD SUBJECT</Button>
+      <Button colorScheme='linkedin' marginTop={2} onClick={onOpen} fontSize={{ base: '10', md: '20' }} >ADD SUBJECT</Button>
 
       <Modal
         initialFocusRef={initialRef}
         isOpen={isOpen}
-        onClose={onClose} 
+        onClose={onClose}
       >
         <ModalOverlay />
         <ModalContent textColor={'whiteAlpha.800'} bg={'#174a62'} >
@@ -58,7 +66,7 @@ export default function AddSubjectModal(props: any) {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Subject name</FormLabel>
-              <Input ref={initialRef} onChange={(e) => {setSubname(e.target.value)}} placeholder='name' />
+              <Input ref={initialRef} onChange={(e) => { setSubname(e.target.value) }} placeholder='name' />
             </FormControl>
           </ModalBody>
 

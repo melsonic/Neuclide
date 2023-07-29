@@ -1,13 +1,19 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, ReactElement, useEffect, useState } from "react";
 
-function Navbar() {
+function Navbar(): ReactElement {
 
   const [authorized, setAuthorized] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+
+    /**
+     * Asynchronously check if the user is authorized.
+     * @async
+     * @function isAuthorized
+     */
     async function isAuthorized() {
       const sessionToken = localStorage.getItem('token');
       const response = await fetch('http://localhost:8080/user/getuser', {
@@ -17,7 +23,6 @@ function Navbar() {
           'Authorization': `Bearer ${sessionToken}`
         }
       });
-
       if (response.ok)
         setAuthorized(true);
     }
@@ -26,6 +31,12 @@ function Navbar() {
 
   }, []);
 
+  /**
+   * Asynchronously handle the user logout process.
+   * @async
+   * @function handleLogout
+   * @param {MouseEvent<HTMLButtonElement>} event - The click event on the logout button.
+   */
   async function handleLogout(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     const sessionToken = localStorage.getItem('token');
@@ -36,7 +47,6 @@ function Navbar() {
         'Authorization': `Bearer ${sessionToken}`
       }
     });
-
     if(response.ok)
       setAuthorized(false);
 

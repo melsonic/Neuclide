@@ -1,8 +1,11 @@
 import Homepage from "@/components/Homepage";
+import { ReactElement } from "react";
 
 
-export default function Home() {
+export default function Home(): ReactElement {
   return (
-     <Homepage />
+    <main>
+      <Homepage />
+    </main>
   );
 }

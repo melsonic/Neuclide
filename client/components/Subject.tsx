@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { ReactElement, useRef, MouseEvent } from "react";
 import CustomAttendance from "./CustomAttendance";
 import {
   Modal,
@@ -18,7 +18,19 @@ interface SubjectType {
   absent: number;
 }
 
-function RowItem(props: any) {
+interface SubjectProps {
+  key: string;
+  subprops: SubjectType,
+  onAttendanceUpdate: Function
+}
+
+interface RowItemProps {
+  name: string,
+  data: number,
+  row: string
+}
+
+function RowItem(props: RowItemProps): ReactElement {
   const { name, data, row } = props;
   return (
     <>
@@ -32,7 +44,7 @@ function RowItem(props: any) {
   );
 }
 
-function Subject(props: any) {
+function Subject(props: SubjectProps): ReactElement {
   let { name, present, absent } = props.subprops;
   const { onAttendanceUpdate } = props;
 
@@ -43,8 +55,15 @@ function Subject(props: any) {
   if (name.length > 25)
     subject_name = `${name.slice(0, 20)} ...`;
 
-  async function handleDelete(e: any) {
-    e.preventDefault();
+  /**
+   * Asynchronously handle the deletion of a subject.
+   * @async
+   * @function handleDelete
+   * @param {MouseEvent} event - The event object representing the button click event.
+   * @returns {Promise<void>} A promise that resolves after handling the subject deletion or an error message.
+   */
+  async function handleDelete(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    event.preventDefault();
     let sessionToken = localStorage.getItem("token");
     let resp = await fetch("http://localhost:8080/subject/delete", {
       method: 'POST',
@@ -58,7 +77,6 @@ function Subject(props: any) {
     });
 
     onAttendanceUpdate();
-
     onClose();
   }
 

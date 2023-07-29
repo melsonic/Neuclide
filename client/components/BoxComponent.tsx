@@ -1,6 +1,11 @@
 import Image from "next/image";
+import { ReactElement } from "react";
 
-export default function BoxComponent(props: any) {
+interface BoxComponentProps {
+  image: string
+}
+
+export default function BoxComponent(props: BoxComponentProps): ReactElement {
   return (
     <div className="flex justify-center items-center mx-12 box-component-bg rounded-2xl">
       <Image

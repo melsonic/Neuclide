@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Subject, SubjectType } from "./Subject";
 
-export default function Subjects(props: any) {
+interface SubjectsProps{
+  subjects: Array<SubjectType>,
+  onAttendanceUpdate: Function
+}
+
+export default function Subjects(props: SubjectsProps): ReactElement {
 
   const {subjects, onAttendanceUpdate} = props;
 

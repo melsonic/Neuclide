@@ -1,15 +1,22 @@
 import { Button } from '@chakra-ui/react';
 import CustomCircularProgress from './CustomCircularProgress';
+import { ReactElement, MouseEvent } from 'react';
+import { SubjectType } from './Subject';
 
-export default function CustomAttendance(props: any) {
+interface CustomAttendanceProps {
+  subprops: SubjectType,
+  onAttendanceUpdate: Function
+}
+
+export default function CustomAttendance(props: CustomAttendanceProps): ReactElement {
   const { name, present, absent } = props.subprops;
   const { onAttendanceUpdate } = props;
   const percentage = (present * 100) / (present + absent);
 
-  async function handlePresent(e: any) {
-    e.preventDefault();
+  async function handlePresent(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
     let sessionToken = localStorage.getItem("token");
-    let resp = await fetch("http://localhost:8080/subject/updateattended", {
+    let response = await fetch("http://localhost:8080/subject/updateattended", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,14 +27,15 @@ export default function CustomAttendance(props: any) {
       })
     });
 
-    onAttendanceUpdate();
+    if(response.ok)
+      onAttendanceUpdate();
 
   }
 
-  async function handleAbsent(e: any) {
-    e.preventDefault();
+  async function handleAbsent(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
     let sessionToken = localStorage.getItem("token");
-    let resp = await fetch("http://localhost:8080/subject/updatemissed", {
+    let response = await fetch("http://localhost:8080/subject/updatemissed", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +46,8 @@ export default function CustomAttendance(props: any) {
       })
     });
 
-    onAttendanceUpdate();
+    if(response.ok)
+      onAttendanceUpdate();
 
   }
 

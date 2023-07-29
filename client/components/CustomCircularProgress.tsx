@@ -1,8 +1,15 @@
 import { Box, CircularProgress, CircularProgressLabel, Flex } from "@chakra-ui/react";
+import { ReactElement } from "react";
 
-export default function CustomCircularProgress(props: any) {
+interface CustomCircularProgressProps {
+  percentage: number
+}
+
+export default function CustomCircularProgress(props: CustomCircularProgressProps): ReactElement {
+  
   let { percentage } = props;
   percentage = Number(percentage);
+
   if (isNaN(percentage)) {
     percentage = 0;
   }

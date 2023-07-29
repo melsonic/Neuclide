@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, ReactElement, useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "./Navbar";
 
@@ -7,22 +7,43 @@ interface RegisterCredentials {
   password: string
 }
 
-export default function Register() {
+interface RegisterResponse {
+  token: string,
+  message: string
+}
+
+/**
+ * Asynchronously register a new user using user credentials.
+ * @async
+ * @function RegisterUser
+ * @param {RegisterCredentials} credentials - The registration credentials of the new user.
+ * @returns {Promise<RegisterResponse>} A promise that resolves to the response data or an error message.
+ */
+async function RegisterUser(credentials: RegisterCredentials): Promise<RegisterResponse> {
+  const response = await fetch('http://localhost:8080/user/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  });
+  const data = await response.json();
+  return data;
+}
+
+export default function Register(): ReactElement {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  async function RegisterUser(credentials: RegisterCredentials) {
-    return fetch('http://localhost:8080/user/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    }).then(response => response.json());
-  }
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  /**
+   * Asynchronously handle the form submission for user registration.
+   * @async
+   * @function handleSubmit
+   * @param {FormEvent<HTMLFormElement>} event - The form submission event.
+   * @returns {Promise<void>} A promise that resolves after handling the form submission or an error message.
+   */
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     const response = await RegisterUser({ username, password });
     localStorage.setItem("token", response.token);

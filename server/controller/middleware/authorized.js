@@ -13,6 +13,7 @@ import constants from "../../constants.js";
  * @returns {void}
  */
 async function authMiddleware(req, res, next) {
+  
   // extract the json web token
   const jwt_token = extractJwtToken(req.headers.authorization);
 
@@ -55,12 +56,20 @@ async function authMiddleware(req, res, next) {
   try {
     dbuser = await User.findOne({ username: user.username });
   } catch (err) {
-    console.log(`db error : ${err}`);
     res.status(500).json({
       "message": constants.ERROR_MESSAGE.USER_NOT_REGISTERED_ERROR,
     });
     return;
   }
+  
+  // if user doesnot exist
+  if(dbuser === null) {
+    res.status(500).json({
+      "message": constants.ERROR_MESSAGE.USER_NOT_REGISTERED_ERROR,
+    });
+    return; 
+  }
+  
 
   let isSame = comparePassword(user.password, dbuser.password);
 

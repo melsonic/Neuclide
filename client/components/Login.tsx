@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, ReactElement, useState } from "react";
 import Navbar from "./Navbar";
 
 interface LoginCredentials {
@@ -7,24 +7,43 @@ interface LoginCredentials {
   password: string;
 }
 
-function Login() {
+interface LoginResponse {
+  token: string,
+  message: string
+}
+
+/**
+ * @description Asynchronously log in a user using user credentials.
+ * @async
+ * @function loginUser
+ * @param {LoginCredentials} credentials - The login credentials of the user.
+ * @returns {Promise<LoginResponse>} A promise that resolves to the response data or an error message.
+ */
+async function loginUser(credentials: LoginCredentials): Promise<LoginResponse> {
+  const response = await fetch('http://localhost:8080/user/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  });
+  const data = await response.json();
+  return data;
+}
+
+function Login(): ReactElement {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  async function loginUser(credentials: LoginCredentials) {
-    const response = await fetch('http://localhost:8080/user/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    });
-    const data = await response.json();
-    return data;
-  }
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  /**
+   * Asynchronously handle the form submission for user login.
+   * @async
+   * @function handleSubmit
+   * @param {FormEvent<HTMLFormElement>} event - The form submission event.
+   * @returns {Promise<void>} A promise that resolves after form submission or an error message.
+   */
+  async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     const response = await loginUser({ username, password });
     localStorage.setItem("token", response.token);

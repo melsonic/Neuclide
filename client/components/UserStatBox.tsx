@@ -1,6 +1,13 @@
+import { ReactElement } from 'react';
 import CustomCircularProgress from './CustomCircularProgress';
 
-export default function UserStatBox(props: any) {
+interface UserStatBoxProps {
+  item: string,
+  name: string,
+  percentage: number
+}
+
+export default function UserStatBox(props: UserStatBoxProps): ReactElement {
   return (
     <div className="flex flex-col items-center px-1 sm:px-8">
       <div className="flex items-center justify-center text-base font-bold">

@@ -1,6 +1,7 @@
 import Register from "@/components/Register";
+import { ReactElement } from "react";
 
-export default function Home() {
+export default function Home(): ReactElement {
   return (
     <main>
       <Register />

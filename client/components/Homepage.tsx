@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import BoxComponent from "./BoxComponent";
 // import Link from "next/link";
 import Navbar from "./Navbar";
 
-export default function Homepage() {
+export default function Homepage(): ReactElement {
   return (
     <div className="min-h-screen bg-image">
       {/* navigation bar */}
