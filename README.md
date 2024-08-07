@@ -18,20 +18,22 @@
 ### <span style="color:lime">Setup Locally</span>
 
 #### <span style="color:skyblue">Database</span>
-- Create a new mongodb database
+- Create a new mongodb database named `neuclide`.
+    - you can set other names also, then it needs to be updated in `.env` file also.
 
 #### <span style="color:skyblue">Server</span>
 - `cd ./server`
 - install the dependencies
-  - `yarn` / `npm install`
-- copy `envexample` to `.env` and fill the contents
+  - `yarn` 
+  - copy `.env.example` to `.env` and fill the contents
+    - `cp .env.example .env`
 - run the server
   - `yarn devstart`
 
 #### <span style="color:skyblue">Client</span>
 - `cd ./client`
 - install the required node modules 
-  - `yarn` / `npm install`
+  - `yarn`
 - run it 
   - `yarn dev`
 

@@ -15,7 +15,7 @@
     "nodemon": "^2.0.22"
   },
   "scripts": {
-    "devstart": "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "type": "module"
 }
